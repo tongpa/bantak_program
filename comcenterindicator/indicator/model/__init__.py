@@ -9,5 +9,6 @@ def init_model(app_session):
     print "init model in indicator"
     DBSession.configure(app_session)
 
+from .models import Sample
 
 

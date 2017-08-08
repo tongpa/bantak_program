@@ -8,7 +8,8 @@ This file complements development/deployment.ini.
 from tg.configuration import AppConfig
 
 import comcenter
-from comcenter import model, lib
+from comcenter import model
+from comcenter import lib
 
 class MultiDBAppConfig(AppConfig):
     def _setup_sqlalchemy(self, conf):
