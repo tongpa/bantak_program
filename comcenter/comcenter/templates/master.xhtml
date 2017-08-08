@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+          py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
+  <meta charset="${response.charset}" />
+
+  <title py:block="master_title">Your generic title goes here</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/admin.css')}" />
+
+  <py:block name="head"></py:block>
+</head>
+
+<body>
+  <!-- Header -->
+  <py:block name="body_menu">Your menu</py:block>
+  
+  <ul id="mainmenu">
+  	<li class="first"><a href="${tg.url('/risk')}" class="${('', 'active')[defined('page') and page=='risk']}">Risk</a></li>
+  	<li><a href="${tg.url('/indicator')}" class="${('', 'active')[defined('page') and page=='indicator']}">KPI</a></li>
+  	<py:if test="request.identity and request.identity['repoze.who.userid'] == 'register'"> 
+  		<li><a href="${tg.url('/project')}" class="${('', 'active')[defined('page') and page=='project']}">Project</a></li>
+  	</py:if>
+  	<li><a href="${tg.url('/project/summary')}" class="${('', 'active')[defined('page') and page=='project_summary']}">Project(summary)</a></li>
+  	<li><a href="${tg.url('/datacenter')}" class="${('', 'active')[defined('page') and page=='datacenter']}">Data Center</a></li>
+ 
+   	<py:if test="tg.auth_stack_enabled">
+        <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
+        <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li> 
+    </py:if>
+  </ul>
+
+
+ <div id="content">
+    <py:if test="defined('page')">
+  	  <div class="currentpage"/>
+    </py:if>
+    <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
+        <div py:if="flash" py:replace="Markup(flash)" />
+    </py:with>
+    <py:block name="body"></py:block>
+    <!-- End of main_content -->
+    
+     <!-- Footer -->
+  	<py:block name="body_footer">Your Footer</py:block>
+  </div>
+	
+ 
+
+  
+</body>
+</html>

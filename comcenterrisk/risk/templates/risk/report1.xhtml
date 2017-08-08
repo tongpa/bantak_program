@@ -1,0 +1,394 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital, Report</title>
+        
+        <link rel="stylesheet" href="/javascript/jquery/jquery-ui.css" />
+	    <script src="/javascript/jquery/jquery-1.8.2.js"></script>
+	    <script src="/javascript/jquery/jquery-ui.js"></script>
+	   	<script>
+		   function exportTToExcel(table){
+		   	var startDate = $("#startDate").val();
+		   	var stopDate = $("#stopDate").val();
+		   	document.location.href ="/risk/exportReport1?tableNo="+table +"&amp;startDate="+startDate +"&amp;stopDate="+stopDate ;
+		   }
+	   </script>
+	   
+	 	<style type="text/css">
+		  .header_border_line {
+			font-weight: bold;
+			}
+		  .header_result {
+			text-align: center;
+			font-weight: bold;
+			font-size: 18px;
+		}
+		  .header_table {
+			text-align: center;
+			font-weight: bold;
+		}
+		  .childen_cell {
+			text-align: center;
+		}
+		
+		table.sample {
+			border-width: 2px;
+			border-spacing: 0px;
+			border-style: solid;
+			border-color: green;
+			border-collapse: collapse;
+			background-color: white; 
+		}
+		table.sample th {
+			border-width: 1px;
+			padding: 2px;
+			border-style: dotted;
+			border-color: green;
+			background-color: white;
+			 
+			text-align: center;
+			background-color:#F2F9FF ;
+		}
+		table.sample td {
+			border-width: 1px;
+			 
+			border-style: dotted;
+			border-color: green;
+			background-color: white;
+			 
+			
+			padding:5px;
+			border-bottom:1px dotted #CCC; 
+		}
+		
+		</style>
+    </head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+   <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/risk/report1" method="post" name="searchform">
+ 
+  <table width="100%">
+  	
+  
+    	<tr>
+        	<td>
+            	 <table width="100%"> 
+                    <tr>
+                        <td width="19%">
+                        </td>
+                        <td width="23%">เดือน 
+                             <select name="month" size="1">
+                                <py:for each="option in listMonth">
+                                     <py:if test="str(month)==str(option['id'])">
+                                        <option value="${option['id']}"  selected="selected" >${option['value'] }</option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}"  >${option['value'] }</option>
+                                     </py:if>
+                                     
+                                </py:for>
+                                 
+                             </select>
+                        </td>
+                        <td width="18%">ปี
+                         
+                            <select name="year" size="1">
+                                <py:for each="option in listYear">
+                              
+                                     <py:if test="str(year)==str(option['id'])">
+                                        <option value="${option['id']}"  selected="selected" >${option['value'] } </option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}"  >${option['value'] } </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                            </select>
+                       
+                        </td>
+                        <td width="39%">
+                        	<input type="hidden" id="startDate" name="startDate"  value="${startDate}" />
+                        	<input type="hidden" id="stopDate" name="stopDate"  value="${stopDate}" />
+                            <input type="submit" value="ค้นหา"/>
+                        </td>
+                        <td width="1%">
+                        </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td></td>
+                    </tr>
+              </table>
+            
+            </td>
+        </tr>
+        
+        <tr>
+        	<td>
+            	<table width="100%" py:if="month and year">
+                	 <tr>
+                            <td>
+                          <table width="100%">
+                          <tr>
+                            <td class="header_result">สรุปรายงานอุบัติการณ์/ภาวะไม่พึงประสงค์ ประจำเดือน ${str(util.getMonthThai(int(month) ))} ${str(year)}
+                            </td>
+                        </tr>
+                                <tr>	<td> <span class="header_border_line">ตารางที่ 1 </span>จำนวนอุบัติการณ์ที่รายงานจากหน่วยงานต่างๆ</td>
+                                </tr>
+                                <tr>
+                                	<td>
+                                        <table width="50%" class="sample">
+                                        <tr>
+                                            <th>หน่วยงาน</th>
+                                            <th>จำนวน</th>
+                                        </tr>
+                                        <tr py:for="sec in section">
+                                            <td>${sec['section']}</td>
+                                            <td>${sec['count']}</td>                    
+                                        </tr>
+                                        </table>
+                                    </td>
+                               </tr>
+                            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%">
+                                <tr>	<td colspan="2"> <span class="header_border_line">ตารางที่ 2 </span>การจำแนกความเสี่ยงในแต่ละด้าน/โปรแกรมที่เกี่ยวข้อง
+                                    </td>
+                                  </tr>
+                                
+                                <tr> <td  width="50%" valign="top">
+                                    <table width="100%" class="sample">
+                                    <tr>
+                                    	<th >ด้าน/โปรแกรม(ทางคลินิก)</th>
+                                        <th>A</th>
+                                        <th>B</th>
+                                        <th>C</th>
+                                        <th>D</th>
+                                        <th>E</th>
+                                        <th>F</th>
+                                        <th>G</th>
+                                        <th>H</th>
+                                        <th>I</th>
+                                        <th>รวม</th>
+                                     </tr>
+                                    <tr py:for="sec in pro_clinic">
+                                        <td>${sec['description']}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['A'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['B'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['C'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['D'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['E'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['F'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['G'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['H'])}</td>
+                                        <td class="childen_cell">${util.changeValueZero(sec['I'])}</td>
+                                        <td class="childen_cell"> ${sec['total'] }</td>                  
+                                    </tr>
+                                    <tr>
+                                        <td class="header_table">รวม</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'A')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'B')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'C')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'D')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'E')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'F')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'G')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'H')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'I')}</td>
+                                        <td class="header_table">${util.sumLevel(pro_clinic,'total')}</td>
+                                    </tr>
+                                    </table >
+                                    </td>
+                                    <td  width="50%"  valign="top">
+                                        <table width="100%" class="sample" >
+		                                    <tr>
+		                                    	<th>ด้าน/โปรแกรม(ทางกายภาพ)</th>
+		                                        <th>0</th>
+		                                        <th>1</th>
+		                                        <th>2</th>
+		                                        <th>3</th>
+		                                       
+		                                        <th>รวม</th>
+		                                    </tr>
+		                                    <tr py:for="sec in pro_physic">
+		                                        <td>${sec['description']}</td>
+		                                        <td class="childen_cell">${util.changeValueZero(sec['A'])}</td>
+		                                        <td class="childen_cell">${util.changeValueZero(sec['B'])}</td>
+		                                        <td class="childen_cell">${util.changeValueZero(sec['C'])}</td>
+		                                        <td class="childen_cell">${util.changeValueZero(sec['D'])}</td>
+		                                        
+		                                        <td class="childen_cell">${sec['total'] }</td>                  
+		                                    </tr>
+		                                    <tr>
+		                                        <td class="header_table">รวม</td>
+		                                        <td class="header_table">${util.sumLevel(pro_physic,'A')}</td>
+		                                        <td class="header_table">${util.sumLevel(pro_physic,'B')}</td>
+		                                        <td class="header_table">${util.sumLevel(pro_physic,'C')}</td>
+		                                        <td class="header_table">${util.sumLevel(pro_physic,'D')}</td>
+		                                        
+		                                        <td class="header_table">${util.sumLevel(pro_physic,'total')}</td>
+		                                    </tr>
+                                    </table>
+                                    <table border = '0'>
+                                    	<tr>
+                                    		<td><font color='red'>หมายเหตุ</font></td>
+                                    		<td><b>0</b>  หมายถึง ไม่มีความรุนแรง </td>
+                                    		<td><b>1</b> หมายถึง รุนแรงน้อย</td>
+                                    	</tr>
+                                    	<tr>
+                                    		<td> </td>
+                                    		<td><b>2</b> หมายถึง รุนแรงปานกลาง </td>
+                                    		<td><b>3</b> หมายถึง รุนแรงมาก  </td>
+                                    	</tr>
+                                    </table>
+                               
+                                    </td>
+                                </tr>
+                            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%">
+                                    <tr> <td><span class="header_border_line">ตารางที่ 3 </span> 10 ลำดับอุบัติการณ์ความเสี่ยงใน ด้าน/โปรแกรม(ทางคลินิก) <input type="button" value="บันทึก ไฟล์ excel"  onClick="exportTToExcel(3);"/> </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                   	    <table width="100%" class="sample">
+                                            	<tr>
+                                                	<th width="60%" >อุบัติการณ์/ภาวะไม่พึงประสงค์</th>
+                                                  <th width="10%">ความรุนแรง</th>
+                                                    <th width="20%">ด้าน/โปรแกรม</th>
+                                                    <th width="10%">หน่วยที่รายงาน</th>
+                                                </tr>
+                                                <entry py:for="sec in priority10">
+                                                <tr >
+                                                	<td>${sec['row']}) (${sec['risk_id']}) ${sec['detail']}</td>
+                                                    <td class="childen_cell"> ${sec['level']}</td>
+                                                    <td>${sec['pro']}</td>
+                                                    <td>${sec['reporter']}</td>
+                                                </tr>
+                                                
+                                                <tr >
+                                                	 
+                                                	<td colspan="4">
+                                                		<table width="90%" class="sample" align="right">
+                                                			<tr>
+			                                                	<th width="15%" >หน่วยที่ตอบ</th>
+			                                                  	<th width="70%">รายละเอียด</th>
+			                                                  	<th width="15%">เวลาที่ตอบกลับ</th>				                                                    
+			                                                </tr>
+			                                                <entry py:for="resp in sec['responsible']">
+                                                				<tr >
+                                                					<td>${resp['service_name']}</td>
+			                                                		<td>${resp['detail']}</td>
+			                                                		<td>${resp['report_date']}</td>
+			                                                	</tr>
+                                                			</entry>
+                                                		</table>
+                                                	</td>
+                                                		
+                                               	</tr>
+                                                
+                                                
+                                                	
+                                                
+                                                </entry>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        
+                    	<tr>
+                            <td>
+                                <table width="100%">
+                                    <tr> <td><span class="header_border_line">ตารางที่ 4 </span> 10 ลำดับอุบัติการณ์ความเสี่ยงใน ด้าน/โปรแกรม(ทางกายภาพ)  <input type="button" value="บันทึก ไฟล์ excel"  onClick="exportTToExcel(4);"/> </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                   	    <table width="100%" class="sample">
+                                            	<tr>
+                                                	<th width="60%" >อุบัติการณ์/ภาวะไม่พึงประสงค์</th>
+                                                  <th width="10%">ความรุนแรง</th>
+                                                    <th width="20%">ด้าน/โปรแกรม</th>
+                                                    <th width="10%">หน่วยที่รายงาน</th>
+                                                </tr>
+                                                <entry  py:for="sec in priority10inphysic">
+                                                <tr>
+                                                	<td>${sec['row']}) (${sec['risk_id']}) ${sec['detail']}</td>
+                                                    <td class="childen_cell"> ${sec['level']}</td>
+                                                    <td>${sec['pro']}</td>
+                                                    <td>${sec['reporter']}</td>
+                                                </tr>
+                                                <tr >
+                                                	<td colspan="4">
+                                                		<table width="90%" class="sample" align="right">
+                                                			<tr>
+			                                                	<th width="15%" >หน่วยที่ตอบ</th>
+			                                                  	<th width="70%">รายละเอียด</th>	
+			                                                  	<th width="15%">เวลาที่ตอบกลับ</th>			                                                    
+			                                                </tr>
+			                                                <entry py:for="resp in sec['responsible']">
+                                                				<tr >
+                                                				<td>${resp['service_name']}</td>
+			                                                		<td>${resp['detail']}</td>
+			                                                		<td>${resp['report_date']}</td>
+			                                                		
+			                                                	</tr>
+                                                			</entry>
+                                                		</table>
+                                                	</td>
+                                                		
+                                               	</tr>
+                                                </entry>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table border = '0'>
+                                    	<tr>
+                                    		<td><font color='red'>หมายเหตุ</font></td>
+                                    		<td><b>0</b>  หมายถึง ไม่มีความรุนแรง </td>
+                                    		<td><b>1</b> หมายถึง รุนแรงน้อย</td>
+                                    	</tr>
+                                    	<tr>
+                                    		<td> </td>
+                                    		<td><b>2</b> หมายถึง รุนแรงปานกลาง </td>
+                                    		<td><b>3</b> หมายถึง รุนแรงมาก  </td>
+                                    	</tr>
+                                    </table>
+                            </td>
+                        </tr>                   
+                
+                
+                </table>
+            </td>
+        </tr>
+        
+    </table>
+ 
+  
+</form>
+   
+   
+</body>
+</html>

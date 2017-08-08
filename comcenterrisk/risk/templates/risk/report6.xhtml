@@ -1,0 +1,210 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital, Report</title>
+        
+    <link rel="stylesheet" href="/javascript/jquery/jquery-ui.css" />
+    <script src="/javascript/jquery/jquery-1.8.2.js"></script>
+    <script src="/javascript/jquery/jquery-ui.js"></script>
+   <script>
+	   function exportTToExcel(table){
+		   
+	   
+	   	var startDate = $("#startDate").val();
+	   	var stopDate = $("#stopDate").val();
+	   	
+	   	document.location.href ="/risk/exportReport1?tableNo="+table +"&amp;startDate="+startDate +"&amp;stopDate="+stopDate ;
+	   	
+	   }
+	   
+   </script>
+   
+  <style type="text/css">
+  .header_border_line {
+	font-weight: bold;
+}
+  .header_result {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+  .header_table {
+	text-align: center;
+	font-weight: bold;
+}
+  .childen_cell {
+	text-align: center;
+}
+
+table.sample {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: green;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	text-align: center;
+	background-color:#F2F9FF ;
+}
+table.sample td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+  </style>
+  
+    </head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+  <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/risk/report6" method="post" name="searchform">
+ 
+  <table width="100%">
+  	
+  
+    	<tr>
+        	<td>
+            	 <table width="100%"> 
+                    <tr>
+                        <td width="19%">
+                        </td>
+                        <td width="23%">เดือน 
+                             <select name="month" size="1">
+                                <py:for each="option in listMonth">
+                                     <py:if test="str(month)==str(option['id'])">
+                                        <option value="${option['id']}"  selected="selected" >${option['value']} </option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}"  >${option['value']} </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                                 
+                             </select>
+                        </td>
+                        <td width="18%">ปี
+                         
+                            <select name="year" size="1">
+                                <py:for each="option in listYear">
+                                     <py:if test="str(year)==str(option['id'])">
+                                        <option value="${option['id']}" selected="selected" >${option['value']} </option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}">${option['value']} </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                            </select>
+                       
+                        </td>
+                        <td width="39%">
+                        	<input type="hidden" id="startDate" name="startDate"  value="${startDate}" />
+                        	<input type="hidden" id="stopDate" name="stopDate"  value="${stopDate}" />
+                            <input type="submit" value="ค้นหา"/>
+                        </td>
+                        <td width="1%">
+                        </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td></td>
+                    </tr>
+              </table>
+            
+            </td>
+        </tr>
+        <tr>
+        	<td class="header_result">
+       	  รายงาน ความทันเวลาในการจัดการ/ตอบกลับ ความเสี่ยง/อุบัติการณ์ทางการยภาพ ของ <span class="hightlight_text">หน่วยงาน</span> ที่เกี่ยวข้อง  ปีงบประมาณ ${fiscal_year} รพ.บ้านตาก อ.บ้านตาก จ.ตาก </td>
+        </tr>
+        
+        <tr>
+          <td>
+          	<table width="100%" class="sample" >
+            	<tr>
+                	<th>ที่</th>
+                	<th>หน่วย</th>
+                	<th colspan="12">อุบัติการณ์/ความเสี่ยงทางกายภาพ</th>
+                    
+                </tr>
+            	<tr>
+                	<th>&nbsp;</th>
+                	<th>&nbsp;</th>
+                	<th colspan="3">ระดับ 0</th>
+                    <th colspan="3">ระดับ 1</th>
+                    <th colspan="3">ระดับ 2</th>
+                    <th colspan="3">ระดับ 3</th>
+                </tr>
+            	
+            	<tr>
+            	  <th>&nbsp;</th>
+            	  <th>&nbsp;</th>
+            	  <th height="50px"><span class="box_rotate">ทั้งหมด</span></th>
+            	  <th><span  class="box_rotate">ภายใน 1 ด.</span></th>
+            	  <th><span class="box_rotate">ร้อยละ</span></th>
+            	  
+            	  <th><span  class="box_rotate">ทั้งหมด</span></th>
+            	  <th><span class="box_rotate">ภายใน 3 สัปดาห์</span></th>
+            	  <th><span  class="box_rotate">ร้อยละ</span></th>
+            	  
+            	  <th><span  class="box_rotate">ทั้งหมด</span></th>
+            	  <th><span class="box_rotate">ภายใน 2 สัปดาห์</span></th>
+            	  <th><span  class="box_rotate">ร้อยละ</span></th>
+            	  
+            	  <th><span  class="box_rotate">ทั้งหมด</span></th>
+            	  <th><span class="box_rotate">ภายใน 1 สัปดาห์</span></th>
+            	  <th><span  class="box_rotate">ร้อยละ</span></th>
+            	  
+       	      </tr>
+            	<tr py:for="option in listReponsible">
+            	  <td>${listReponsible[option]['index']}</td>
+            	  <td>${listReponsible[option]['team_name']}  </td>
+            	  <!-- <entry py:for="resp in listReponsible[option]['levels']">  -->
+            	  <entry py:for="resp in program"> 	  
+	            	  <td class="childen_cell">${listReponsible[option]['levels'][resp.description]['total']}</td>
+	            	  <td class="childen_cell">${listReponsible[option]['levels'][resp.description]['within']}</td>
+	            	  <td class="childen_cell">${listReponsible[option]['levels'][resp.description]['percent']}</td>
+          	  	  
+          	  	  </entry>
+          	  </tr>
+            	
+            </table>
+          </td>
+        </tr>
+         
+    </table>
+ 
+  
+</form>
+   
+   
+</body>
+</html>

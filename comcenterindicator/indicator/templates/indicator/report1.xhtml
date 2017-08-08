@@ -1,0 +1,238 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+<head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital</title>
+        
+  <link rel="stylesheet" href="/javascript/jquery/jquery-ui.css" />
+    <script src="/javascript/jquery/jquery-1.8.2.js"></script>
+    <script src="/javascript/jquery/jquery-ui.js"></script>
+   <script>
+	   function exportTToExcel(table){
+		   
+	   
+	   	var startDate = $("#startDate").val();
+	   	var stopDate = $("#stopDate").val();
+	   	
+	   	document.location.href ="/risk/exportReport1?tableNo="+table +"&amp;startDate="+startDate +"&amp;stopDate="+stopDate ;
+	   	
+	   }
+	   
+   </script>
+   
+  <style type="text/css">
+  .header_border_line {
+	font-weight: bold;
+}
+  .header_result {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.title_result {
+	text-align: left;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+  .header_table {
+	text-align: center;
+	font-weight: bold;
+}
+  .childen_cell {
+	text-align: center;
+}
+
+table.sample {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: green;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	text-align: center;
+	background-color:#F2F9FF ;
+}
+table.sample td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+  </style>
+</head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+  
+    
+  <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/indicator/report1" method="post" name="searchform">
+ 
+  <table width="100%">
+  	
+  
+    	<tr>
+        	<td>
+            	 <table width="100%"> 
+            	 
+            	 
+            	 
+                    <tr>
+                                           
+                    <td width="50%"><label>หน่วยงาน : </label>
+                   
+  		 					<py:switch test="disabledSelect">
+  		 							 <span py:case ="True">
+  		 							 		<select name="team_id" id="team_id"  disabled="disabled">
+				  		 						  <py:for each="sec in listteam">  		 						  
+						  		 						 <py:switch test=" sec.get('selected')">
+															  <option py:case ="True"  value="${sec['risk_team_id']}"  selected="">${sec['description']}</option>
+															  <option py:case ="False" value="${sec['risk_team_id']}" >${sec['description']}</option>											 
+														</py:switch>
+				  		 					 	 </py:for>
+				  		 					</select>
+  		 							 </span >
+  		 							 <span py:case="False">
+	  		 							 	<select name="team_id" id="team_id"  >
+	  		 							 			<py:for each="sec in listteam">  		 						  
+						  		 						 <py:switch test=" sec.get('selected')">
+															  <option py:case ="True"  value="${sec['risk_team_id']}"  selected=""  >${sec['description']}</option>
+															  <option py:case ="False" value="${sec['risk_team_id']}"   >${sec['description']}</option>											 
+														</py:switch>
+					  		 					 	</py:for>
+					  		 					</select>
+  		 							 </span>
+  		 					</py:switch>
+  		 					
+ 					 
+                    
+                        </td>
+                       
+                        <td width="18%">ปี
+                         
+                            <select name="year" size="1">
+                                <py:for each="option in listYear">
+                                     <py:if test="str(year)==str(option.get('id'))">
+                                        <option value="${option.get('id')}"  selected="selected" >${option.get('value')}</option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option.get('id'))">
+                                        <option value="${option.get('id')}"  >${option.get('value')} </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                            </select>
+                       
+                        </td>
+                        
+                        <td width="26%">
+                        	 
+                            <input type="submit" value="ค้นหา"/>
+                        </td>
+                        <td width="1%">
+                        </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td></td>
+                    </tr>
+              </table>
+            
+            </td>
+        </tr>
+        
+        <tr>
+        	<td>
+            	<table width="100%" py:if="year" >
+            	<tr> <td  class="header_result">หน่วยงาน ${teamName} ประจำปี ${year}</td>
+            	</tr>
+            		<tr  py:for="sec in listHash">
+            			<td>
+            				<table width="100%" >
+                                    	<tr> <?python  obj = listHash[sec]; ?> 
+ 											<td class="title_result">${obj.get("name") }</td> 
+ 									    </tr>
+ 										<tr>	
+ 											<td><?python  indicators =obj.get("indicators"); ?>
+ 											<table width="100%" class="sample"> 
+ 											<tr>
+ 												<th width="35%"  class="header_table">ตัวชี้วัด</th>
+ 												<th  width="5%"    class="header_table">เป้า</th>
+ 												<th   class="header_table">ต.ค.</th>
+ 												<th   class="header_table">พ.ย.</th>
+ 												<th   class="header_table">ธ.ค.</th>
+ 												<th   class="header_table">ม.ค.</th>
+ 												<th   class="header_table">ก.พ.</th>
+ 												<th   class="header_table">มี.ค.</th>
+ 												<th   class="header_table">เม.ย.</th>
+ 												<th   class="header_table">พ.ค.</th>
+ 												<th   class="header_table">มิ.ย.</th>
+ 												<th   class="header_table">ก.ค.</th>
+ 												<th   class="header_table">ส.ค.</th>
+ 												<th   class="header_table">ก.ย.</th>
+ 												
+ 										<!-- 		<th   class="header_table">รวม</th>  -->
+ 											</tr>
+			                                    	<tr  py:for="ind in indicators">
+														 <?python  indicator = indicators[ind]; ?>
+			 											<td class="tdcolor">${indicator.get("detail") }</td>
+			 											<td class="header_table">  ${indicator.get("target") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("1") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("2") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("3") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("4") }</td>
+			 											 <td class="tdcolor childen_cell" >${indicator.get("5") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("6") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("7") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("8") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("9") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("10") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("11") }</td>
+			 											 <td class="tdcolor childen_cell">${indicator.get("12") }</td>
+			 								<!-- 		 <td class="tdcolor childen_cell"><?python   d=   float(indicator.get("1"))+ float(indicator.get("2")) +  float(indicator.get("3")) +  float(indicator.get("4")) +  float(indicator.get("5")) +  float(indicator.get("6")) +  float(indicator.get("7")) +  float(indicator.get("8")) +  float(indicator.get("9")) +  float(indicator.get("10")) +  float(indicator.get("11")) +  float(indicator.get("12")); ?>${d }</td>  -->	
+			 											
+			                                     </tr>
+			                                  </table>
+			                               </td>
+                                     </tr>
+                                  </table>
+            			
+            			</td>
+            		</tr>
+                </table>
+            </td>
+        </tr>
+        
+    </table>
+ 
+  
+</form>
+  
+ <!--  <div class="notice"> Thank you for choosing TurboGears. </div>  -->
+</body>
+</html>

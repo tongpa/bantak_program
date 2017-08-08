@@ -1,0 +1,32 @@
+
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">Intranet of Bantak Hospital</title>
+    </head>
+
+    <body py:block="body" py:strip="True">
+    
+    <py:block name="body_menu">${header()}</py:block>	
+    <py:block name="body_footer">${footer()}</py:block>		
+      <div id="getting_started">
+    <h2>โปรแกรม</h2>
+    <p> </p>
+    <ol id="getting_started_steps">
+      <li class="getting_started">
+        <h3><a href='/risk'> โปรแกรมความเสี่ยง </a></h3>
+        <p>  </p>
+      </li>
+      <li class="getting_started"> 
+        <h3><a href='/indicator'>โปรแกรมบันทึกข้อมูลตัวชี้วัด  </a></h3>
+        <p>   </p>
+      </li>
+       
+    </ol>
+  </div>
+  <div class="clearingdiv" />
+    </body>
+</html>

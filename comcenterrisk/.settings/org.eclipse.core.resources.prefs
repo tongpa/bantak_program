@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//risk/controllers/__init__.py=utf-8
+encoding//risk/controllers/adminriskmanagecontroller.py=utf-8
+encoding//risk/controllers/root.py=utf-8
+encoding//risk/model/__init__.py=utf-8
+encoding//risk/templates/risk/admin/__init__.py=utf-8
+encoding//risk/templates/risk/admin/master.html=UTF-8

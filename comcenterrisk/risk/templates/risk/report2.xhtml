@@ -1,0 +1,189 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital, Report</title>
+        
+       <style type="text/css">
+  .header_border_line {
+	font-weight: bold;
+}
+  .header_result {
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+  .header_table {
+	text-align: center;
+	font-weight: bold;
+}
+  .childen_cell {
+	text-align: center;
+}
+
+table.sample {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: green;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	text-align: center;
+	background-color:#F2F9FF ;
+}
+table.sample td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+  </style>
+    </head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+   <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/risk/report2" method="post" name="searchform">
+ 
+  <table width="100%">
+  	
+  
+    	<tr>
+        	<td>
+            	 <table width="100%"> 
+                    <tr>
+                        <td width="19%">
+                        </td>
+                        <td width="23%"> 
+                            
+                        </td>
+                        <td width="18%">ปีงบประมาณ
+                         
+                            <select name="year" size="1">
+                                <py:for each="option in listYear">
+                                     <py:if test="str(year)==str(option['id'])">
+                                        <option value="${option['id']}"  selected="selected" >${option['value']} </option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}"  >${option['value']} </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                            </select>
+                       
+                        </td>
+                        <td width="39%">
+                            <input type="submit" value="ค้นหา"/>
+                        </td>
+                        <td width="1%">
+                        </td>
+                    </tr>
+                     
+              </table>
+            
+            </td>
+        </tr>
+        
+        <tr>
+        	<td>&nbsp;
+            	 
+            </td>
+        </tr>
+        <tr>
+        	<td class="header_result">
+            	 จำนวนหน่วยงานที่ส่งรายงานอุบัติการณ์/ความเสี่ยง รายเดือน ปีงบประมาณ ${year} รพ.บ้านตาก อ.บ้านตาก จ.ตาก
+            </td>
+        </tr>
+        <tr>
+          <td>
+          	<table width="100%" class="sample">
+            	<tr>
+                	<th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th colspan="12">ปี ${year}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            	<tr>
+                	<th>ลำดับ</th>
+                    <th>หน่วย</th>
+                    <th>ต.ค.</th>
+                    <th>พ.ย.</th>
+                    <th>ธ.ค.</th>
+                    <th>ม.ค.</th>
+                    <th>ก.พ.</th>
+                    <th>มี.ค.</th>
+                    <th>เม.ย.</th>
+                    <th>พ.ค.</th>
+                    <th>มิ.ย.</th>
+                    <th>ก.ค.</th>
+                    <th>ส.ค.</th>
+                    <th>ก.ย.</th>
+                    <th>รวม</th>
+                </tr>
+                <tr py:for="sec in section">
+                	<td>${sec['row']}</td>
+                    <td>${sec['description']}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month10'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month11'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month12'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month1'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month2'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month3'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month4'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month5'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month6'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month7'])}</td>
+                   	<td class="childen_cell">${util.changeValueZero(sec['month8'])}</td>
+                    <td class="childen_cell">${util.changeValueZero(sec['month9'])}</td>
+                    <td class="childen_cell">${sec['total']}</td>
+                </tr>
+                <tr  >
+                	<td colspan="2" class="header_table">รวมอุบัติการณ์ทั้งหมด</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month10')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month11')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month12')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month1')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month2')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month3')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month4')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month5')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month6')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month7')}</td>
+                   	<td class="childen_cell">${util.sumLevel(section, 'month8')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'month9')}</td>
+                    <td class="childen_cell">${util.sumLevel(section, 'total') }</td>
+                </tr>
+            </table>
+          </td>
+        </tr>
+        
+    </table>
+ 
+  
+</form>
+   
+   
+</body>
+</html>

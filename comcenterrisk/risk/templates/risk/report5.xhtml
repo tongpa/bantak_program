@@ -1,0 +1,283 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital, Report</title>
+        
+    <link rel="stylesheet" href="/javascript/jquery/jquery-ui.css" />
+    <script src="/javascript/jquery/jquery-1.8.2.js"></script>
+    <script src="/javascript/jquery/jquery-ui.js"></script>
+    <script>
+    $(function() {
+    	
+    	  var d = new Date();
+  	    var toDay = d.getDate() + '/' + (d.getMonth() + 1) + '/' +  d.getFullYear() ;// (d.getFullYear() + 543);
+  	    
+    //    $( "#datepickerStart" ).datepicker({showButtonPanel: true});  //,minDate: -20, maxDate: '+1M +10D'  
+    //    $( "#datepickerStop" ).datepicker();
+ 
+        $("#datepickerStart").datepicker({ changeMonth: true, changeYear: true,dateFormat: 'dd/mm/yy',
+	    	//isBuddhist: false, defaultDate: toDay,
+	    	showButtonPanel: true,
+	    	//defaultDate: toDay,
+	    	defaultDate: +7,
+	    	currentText : 'วันนี้',
+	    	closeText : 'ปิด',
+	    	prevText : 'ก่อนหน้า',
+	    	nextText : 'ถัดไป',
+	    	dayNames: ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'],
+          dayNamesMin: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
+          monthNames: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+          monthNamesShort: ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.']});
+        
+        $("#datepickerStop").datepicker({ changeMonth: true, changeYear: true,dateFormat: 'dd/mm/yy',
+	    	//isBuddhist: false, 
+	    	showButtonPanel: true,
+	    	defaultDate: toDay,
+	    	currentText : 'วันนี้',
+	    	closeText : 'ปิด',
+	    	prevText : 'ก่อนหน้า',
+	    	nextText : 'ถัดไป',
+	    	dayNames: ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'],
+          dayNamesMin: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
+          monthNames: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+          monthNamesShort: ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.']});	    
+    });
+    
+    
+    function exportToExcel(){
+    	var team_id = $("#team_id").val() ;
+    	var startDate = $("#hiddenDateStart").val();
+    	var stopDate = $("#hiddenDateStop").val();
+    	
+    	document.location.href ="/risk/exportReport5?team_id="+team_id +"&amp;startDate="+startDate +"&amp;stopDate="+stopDate ;
+    	
+    }
+    </script>
+  <style type="text/css">
+  .header_border_line {
+	font-weight: bold;
+}
+  .header_result {
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+  .header_table {
+	text-align: center;
+	font-weight: bold;
+}
+  .childen_cell {
+	text-align: center;
+}
+.childen_cell_top{
+	vertical-align:text-top;
+}
+
+table.sample {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: green;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	text-align: center;
+	background-color:#F2F9FF;
+	font-size: 18;
+}
+table.sample td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: green;
+
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+table.sample2 {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: #00DDC3;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample2 th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: #00DDC3;
+	background-color: white;
+	text-align: center;
+	background-color:#F2F9FF;
+	font-size: 18;
+}
+table.sample2 td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: #00DDC3;
+	background-color: white;
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+.tdcolor {
+	background-color: #CCCCCC;
+}
+
+  .hightlight_text {
+	font-weight: normal;
+	font-size: 18px;
+}
+
+.box_rotate {
+    -moz-transform: rotate(-90deg);  /* FF3.5+ */
+    -o-transform: rotate(-90deg);  /* Opera 10.5 */
+  	-webkit-transform: rotate(-90deg);  /* Saf3.1+, Chrome */
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; /* IE8 */
+	-ms-transform: rotate(-90deg);
+	transform: rotate(-90deg); 
+	height: 100px;
+	width:50px;
+	left: -15px;
+	top : 10px;
+}
+.demoHeaders { margin-top: 2em; }
+			#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+			ul#icons {margin: 0; padding: 0;}
+			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+			ul#icons span.ui-icon {float: left; margin: 0 4px;}
+			ul.test {list-style:none; line-height:30px;}
+/*
+.ui-datepicker{  
+    width:180px;  
+    font-family:tahoma;  
+    font-size:12px;  
+    text-align:center;  
+    }
+    */
+  </style>
+  
+    </head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+   <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/risk/report5" method="post" name="searchform">
+	
+ 	
+  <table width="100%" >
+  		 <tr><td>
+  		 	  <table width="100%">
+  		 		<tr>	
+  		 				<td width="23%"><label>ทีมคร่อม : </label>
+  		 					<py:switch test="disabledSelect">
+  		 							 <py:case value="True">
+  		 							 		<select name="team_id" id="team_id"  disabled="disabled">
+				  		 						  <py:for each="sec in listteam">  		 						  
+						  		 						 <py:switch test="sec['selected']">
+															  <py:case value="True"><option  value="${sec['risk_team_id']}"  selected="selected">${sec['description']}</option>  </py:case>
+															  <py:case value="False"><option value="${sec['risk_team_id']}">${sec['description']}</option> </py:case> 											 
+														</py:switch>
+				  		 					 	 </py:for>
+				  		 					</select>
+  		 							 </py:case>
+  		 							 <py:case value="False">
+	  		 							 	<select name="team_id" id="team_id"  >
+					  		 						  <py:for each="sec in listteam">  		 						  
+							  		 						 <py:switch test="sec['selected']">
+																  <py:case value="True"><option value="${sec['risk_team_id']}" selected="selected">${sec['description']}</option></py:case>
+																  <py:case value="False"><option  value="${sec['risk_team_id']}">${sec['description']}</option> </py:case> 											 
+															</py:switch>
+					  		 					 	 </py:for>
+					  		 					</select>
+  		 							 </py:case>
+  		 					</py:switch>
+  		 					
+ 						</td> 						 
+ 						<td width="25%">วันที่เริ่ม: <input type="text" name="datepickerStart"  id="datepickerStart" /> <input type="hidden" id="hiddenDateStart" name="hiddenDateStart"  value="${start}" /> </td>
+ 						<td width="25%">วันที่สิ้นสุด: <input type="text"  name="datepickerStop"  id="datepickerStop" /><input type="hidden" id="hiddenDateStop" name="hiddenDateStop"  value="${stop}" />  </td>
+ 						<td width="27%">   <input type="submit" value="ค้นหา"/>     </td>
+  		 		</tr>
+  		 		
+  		 	</table>
+  		 </td>
+  		 </tr>
+  		 
+  		 <tr>
+  		 	<td class="header_result">
+	  		 		 <span  py:if="teamName">รายงานอุบัติการณ์ของ  ทีม ${teamName}  </span>
+	  		 		 <span  py:if="start"> ตั้งแต่วันที่  ${start} </span>
+	  		 		 <span  py:if="stop"> ถึงวันที่ ${stop}  </span>
+	  		 		 <input type="button" value="บันทึก ไฟล์ excel"  onClick="exportToExcel();"/>
+  		 	</td>
+  		 </tr>
+  		 
+  		 <tr><td>
+  		 	<table width = "100%" class="sample" >
+  		 		<tr>
+  		 			<th width="5%"  class="header_table">risk id</th>
+		 			<th width="72%"  class="header_table">รายละเอียด</th>
+		 			<th width="8%"  class="header_table">วันที่รายงาน</th>
+		 			<th width="15%"  class="header_table">หน่วยที่รายงาน</th>
+  		 		</tr>
+  		 		<py:for each="sec in riskTeamCrom">
+	  		 		<tr >
+	  		 				<td  class="childen_cell tdcolor childen_cell_top">${sec['risk_management_id']}</td>
+	  		 				<td class= "tdcolor">${sec['risk_detail']}</td>
+	  		 				<td class= "tdcolor childen_cell_top">${util.convertDateToString(sec['report_date'],"%d/%m/%Y")}</td>
+	  		 				<td class= "tdcolor childen_cell_top">${sec['report']}</td>
+	  		 		</tr>
+	  		 		<tr>
+	  		 				<td  class="childen_cell"></td>
+	  		 				<td colspan="2">
+	  		 					<table  width = "100%" class="sample2" > 
+	  		 							<tr>
+						  		 			<th width="20%"  class="header_table">หน่วยที่เกี่ยข้อง</th>
+								 			<th width="80%"  class="header_table">รายละเอียดการตอบ</th>								 			 
+						  		 		</tr>
+						  		 		<py:for each="resp in sec['response']">
+						  		 			<tr >
+							  		 				<td >${resp['risk_team']}</td>
+							  		 				<td>${resp['result']}</td> 
+							  		 		</tr>
+						  		 		</py:for>
+	  		 					</table>
+	  		 				</td>
+	  		 				<td  class="childen_cell"></td>
+	  		 		</tr>
+  		 		</py:for>
+  		 	</table>
+  		 
+  		 </td></tr>
+    </table>
+ 
+  
+</form>
+   
+   
+</body>
+</html>

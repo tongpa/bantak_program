@@ -1,0 +1,267 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+    <head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital, Report</title>
+        
+       <style type="text/css">
+  .header_border_line {
+	font-weight: bold;
+}
+  .header_result {
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+  .header_table {
+	text-align: center;
+	font-weight: bold;
+}
+  .childen_cell {
+	text-align: center;
+}
+
+table.sample {
+	border-width: 2px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: green;
+	border-collapse: collapse;
+	background-color: white; 
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2px;
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	text-align: center;
+	background-color:#F2F9FF;
+	font-size: 18;
+}
+table.sample td {
+	border-width: 1px;
+	 
+	border-style: dotted;
+	border-color: green;
+	background-color: white;
+	 
+	
+	padding:5px;
+	border-bottom:1px dotted #CCC; 
+}
+
+  .hightlight_text {
+	font-weight: normal;
+	font-size: 18px;
+}
+
+.box_rotate {
+    -moz-transform: rotate(-90deg);  /* FF3.5+ */
+    -o-transform: rotate(-90deg);  /* Opera 10.5 */
+  	-webkit-transform: rotate(-90deg);  /* Saf3.1+, Chrome */
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; /* IE8 */
+	-ms-transform: rotate(-90deg);
+	transform: rotate(-90deg); 
+	height: 100px;
+	width:50px;
+	left: -15px;
+	top : 10px;
+}
+  </style>
+    </head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+   <div id="getting_started">
+     <div id="maintenance-app"/>
+  </div>
+  <div class="clearingdiv" />
+	<form action="/risk/report3" method="post" name="searchform">
+ 
+  <table width="100%">
+  	
+  
+    	<tr>
+        	<td>
+            	 <table width="100%"> 
+                    <tr>
+                        <td width="19%">
+                        </td>
+                        <td width="23%"> 
+                            
+                        </td>
+                        <td width="18%">ปีงบประมาณ
+                         
+                            <select name="year" size="1">
+                                <py:for each="option in listYear">
+                                     <py:if test="str(year)==str(option['id'])">
+                                        <option value="${option['id']}"  selected="selected" >${option['value']} </option>
+                                     </py:if>
+                                     <py:if test="str(year)!=str(option['id'])">
+                                        <option value="${option['id']}"  >${option['value']} </option>
+                                     </py:if>
+                                     
+                                </py:for>
+                            </select>
+                       
+                        </td>
+                        <td width="39%">
+                            <input type="submit" value="ค้นหา"/>
+                        </td>
+                        <td width="1%">
+                        </td>
+                    </tr>
+                     
+              </table>
+            
+            </td>
+        </tr>
+        
+        <tr>
+        	<td>&nbsp;
+            	 
+            </td>
+        </tr>
+        <tr>
+        	<td class="header_result">
+       	  สรุปการนำส่งและการตอบกลับ ข้อมูลความเสี่ยงอุบัติการณ์ ไปยัง <span class="hightlight_text">หน่วยงาน</span> ที่เกี่ยวข้อง  ปีงบประมาณ ${year} รพ.บ้านตาก อ.บ้านตาก จ.ตาก </td>
+        </tr>
+        <tr>
+          <td>
+          	<table width="100%" class="sample" >
+            	<tr>
+                	<th>ที่</th>
+                	<th>หน่วย</th>
+                	<th colspan="6">${(int(year)-int(1))}</th>
+                    <th colspan="18">${year}</th>
+                    <th colspan="2">รวม</th>
+
+                </tr>
+            	<tr>
+                	<th>&nbsp;</th>
+                	<th>&nbsp;</th>
+                	<th colspan="2">ต.ค.</th>
+                    <th colspan="2">พ.ย.</th>
+                    <th colspan="2">ธ.ค.</th>
+                    <th colspan="2">ม.ค.</th>
+                    <th colspan="2">ก.พ.</th>
+                    <th colspan="2">มี.ค.</th>
+                    <th colspan="2">เม.ย.</th>
+                    <th colspan="2">พ.ค.</th>
+                    <th colspan="2">มิ.ย.</th>
+                    <th colspan="2">ก.ค.</th>
+                    <th colspan="2">ส.ค.</th>
+                    <th colspan="2">ก.ย.</th>
+                    <th colspan="2">&nbsp;</th>
+
+                </tr>
+            	
+            	<tr>
+            	  <th>&nbsp;</th>
+            	  <th>&nbsp;</th>
+            	  <th height="50px" width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+            	  <th width="20px"><span class="box_rotate">ส่ง</span></th>
+            	  <th><span  class="box_rotate">ตอบ</span></th>
+       	      </tr>
+            	<tr py:for="sec in section">
+            	  <td>${sec['row']}</td>
+            	  <td>${sec['description']} </td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total10'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported10'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total11'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported11'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total12'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported12'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total1'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported1'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total2'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported2'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total3'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported3'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total4'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported4'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total5'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported5'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total6'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported6'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total7'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported7'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total8'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported8'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['total9'])}</td>
+            	  <td class="childen_cell">${util.changeValueZero(sec['reported9'])}</td>
+            	  <td class="childen_cell">${sec['total']}</td>
+            	  <td class="childen_cell">${sec['total_reported']}</td>
+          	  </tr>
+            	<tr>
+            	  <td>&nbsp;</td>
+            	  <td class="header_table">รวมหน่วย</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total10')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported10')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total1')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported11')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total12')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported12')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total1')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported1')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total2')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported2')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total3')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported3')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total4')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported4')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total5')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported5')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total6')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported6')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total7')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported7')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total8')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported8')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total9')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'reported9')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total')}</td>
+            	  <td class="childen_cell">${util.sumLevel(section, 'total_reported')}</td>
+          	  </tr>
+            </table>
+          </td>
+        </tr>
+        
+    </table>
+ 
+  
+</form>
+   
+   
+</body>
+</html>

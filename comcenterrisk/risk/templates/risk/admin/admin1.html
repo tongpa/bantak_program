@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<xi:include href="../../master.html" />
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:replace="''"  py:if="False"/>
+<title>Login Form</title>
+
+<link rel="stylesheet" type="text/css" href="${tg.url('/javascript/extjs/resources/css/ext-all.css')}"/>
+  <script type="text/javascript" src="${tg.url('/javascript/extjs/bootstrap.js')}"></script>
+  <link rel="stylesheet" type="text/css" href="${tg.url('/ux/ItemSelector.css')}" />
+  <script type="text/javascript" src="${tg.url('/javascript/extjs/locale/ext-lang-th.js')}"></script>
+  
+  <script type="text/javascript" src="${tg.url('/javascript/risk/models.js')}" >  </script>
+  <script type="text/javascript" src="${tg.url('/javascript/risk/admin_risk.js')}" >  </script>  
+  
+  <script type="text/javascript">
+		  Ext.Loader.setConfig({enabled: true});
+		//Ext.Loader.setPath('Ext.ux', '/ux');
+		
+		Ext.Loader.setPath('Ext.ux', '/javascript/extjs/examples/ux');
+		Ext.require([
+		             
+		             'Ext.form.*',
+		             'Ext.layout.container.Column',
+		             'Ext.ux.form.MultiSelect',
+		             'Ext.ux.form.ItemSelector',
+		             'Ext.tip.QuickTipManager',
+		             'Ext.ux.ajax.JsonSimlet',
+		             'Ext.ux.ajax.SimManager',             
+		             'Ext.window.MessageBox'
+		             
+		         ]);
+		 
+		 
+		Ext.application({
+		    name: 'risks',
+		    launch: function() {
+		    	Ext.tip.QuickTipManager.init();
+		     
+		    	var ddd  = Ext.create('risks.view.ListRisk', {
+		    		autoWidth : true
+		    		//width : '70%' 
+		    	}); 
+		    	 
+		    	ddd.loadStore();
+		     
+		    	 
+		    	
+		    	Ext.create('Ext.Panel',{
+		    		border : true,			 
+					autoWidth : true,
+					anchor: '100%',
+		    		renderTo : 'maintenance-app',
+		    		items : [ ddd ]
+		    	});
+		    	
+		    	
+		    	
+		    	 
+		    }
+		});
+  </script>
+  
+  
+</head>
+
+<body>
+ 
+ ${sidebar_left()}  
+	ข้อมูลผู้ใช้
+ 
+ 	  <div id="getting_started">
+     <div id="maintenance-app"/>
+     </div>
+</body>
+</html>

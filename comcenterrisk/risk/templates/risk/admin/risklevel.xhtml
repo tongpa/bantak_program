@@ -1,0 +1,86 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="risk.templates.risk.admin.sidebars"/>
+
+	<py:extends href="master.xhtml"/>
+	
+<head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="${tg.url('/javascript/extjs/resources/css/ext-all.css')}"/>
+  <script type="text/javascript" src="${tg.url('/javascript/extjs/bootstrap.js')}"></script>
+  <link rel="stylesheet" type="text/css" href="${tg.url('/ux/ItemSelector.css')}" />
+  <script type="text/javascript" src="${tg.url('/javascript/extjs/locale/ext-lang-th.js')}"></script>
+  
+  <script type="text/javascript" src="${tg.url('/_pluggable/risk/javascript/risk/models.js')}" >  </script>
+  <script type="text/javascript" src="${tg.url('/_pluggable/risk/javascript/risk/admin_risk.js')}" >  </script>  
+  
+  <script type="text/javascript">
+		  Ext.Loader.setConfig({enabled: true});
+		//Ext.Loader.setPath('Ext.ux', '/ux');
+		
+		Ext.Loader.setPath('Ext.ux', '/javascript/extjs/examples/ux');
+		Ext.require([
+		             
+		             'Ext.form.*',
+		             'Ext.layout.container.Column',
+		             'Ext.ux.form.MultiSelect',
+		             'Ext.ux.form.ItemSelector',
+		             'Ext.tip.QuickTipManager',
+		             'Ext.ux.ajax.JsonSimlet',
+		             'Ext.ux.ajax.SimManager',             
+		             'Ext.window.MessageBox'
+		             
+		         ]);
+		 
+		 
+		Ext.application({
+		    name: 'risks',
+		    launch: function() {
+		    	Ext.tip.QuickTipManager.init();
+		     
+		    	var ddd  = Ext.create('risks.view.ListRiskLevel', {
+		    		autoWidth : true,
+		    		border : false
+		    		//width : '70%' 
+		    	}); 
+		    	 
+		    	ddd.loadStore();
+		     
+		    	 
+		    	
+		    	Ext.create('Ext.Panel',{
+		    		border : true,			 
+					autoWidth : true,
+					anchor: '100%',
+		    		renderTo : 'maintenance-app',
+		    		title : 'ระดับความรุนแรง',
+		    		items : [ ddd ]
+		    	});
+		    	
+		    	
+		    	
+		    	 
+		    }
+		});
+  </script>
+  
+  
+</head>
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+   
+ 	<div>
+ 		${sidebar_left()}  
+	</div>
+	 
+ 
+ 	  <div id="getting_started">
+     <div id="maintenance-app"/>
+     </div>
+</body>
+</html>

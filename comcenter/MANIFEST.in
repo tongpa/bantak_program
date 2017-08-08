@@ -1,0 +1,4 @@
+recursive-include comcenter/public *
+include comcenter/public/favicon.ico
+recursive-include comcenter/i18n *
+recursive-include comcenter/templates *

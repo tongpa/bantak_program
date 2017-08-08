@@ -1,0 +1,49 @@
+<html py:strip="True" lang="en">
+	<py:extends href="menus/header_menu.xhtml"/>
+	<py:extends href="menus/footer_menu.xhtml"/>
+	<py:extends href="master.xhtml"/>
+
+<head py:block="head" py:strip="True">
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+        <title py:block="master_title">Computer Center,Bantak Hospital</title>
+  
+  <script type="text/javascript">
+  	sectionid= '${sectionid}'; 
+  	level = '${level}'; 
+  </script>
+  
+  
+
+  <script type="text/javascript" src="${tg.url('/javascript/extjs/bootstrap.js')}"></script>
+  <link rel="stylesheet" type="text/css" href="${tg.url('/ux/ItemSelector.css')}" />
+
+  
+ 
+  
+  
+  
+  
+  
+</head>
+
+<body py:block="body" py:strip="True">
+	<py:block name="body_menu">${header()}</py:block>
+	<py:block name="body_footer">${footer()}</py:block>
+<table width="100%" border="0">
+  <tr>
+    <td>   ผู้ใช้:  ${user} </td>
+     <td align="right"><a href="/download/manual/manual_kpi.pdf" target="_new">คู่มือ</a></td>
+  </tr>
+</table>
+ 
+
+  <div id="getting_started">
+     <div id="maintenance-app"/>
+     <a href="/indicator/report1">1. ตัวชี้วัดตามหน่วยงาน</a><br/>
+     <a href="/indicator/report2">2. สรุปตัวชี้วัดประจำปี</a>
+  </div>
+  <div class="clearingdiv" />
+ <!--  <div class="notice"> Thank you for choosing TurboGears. </div>  -->
+</body>
+</html>
+
