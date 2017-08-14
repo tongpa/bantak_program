@@ -49,11 +49,11 @@ class RootController(TGController):
         user_display ="";
         ip=request.environ.get("X_FORWARDED_FOR", request.environ["REMOTE_ADDR"]);
         #print ip;
-        self.selectall = app_model.TestSample.selectAll()
-        print 'leng : %s' %len(self.selectall)
+        #self.selectall = app_model.TestSample.selectAll()
+        #print 'leng : %s' %len(self.selectall)
         
-        for d in self.selectall:
-            print "value : %s" %d.user_id
+        #for d in self.selectall:
+        #    print "value : %s" %d.user_id
         
         if request.identity:
             userid = request.identity['repoze.who.userid'];

@@ -18,26 +18,9 @@ import logging;
 import sys;
 log = logging.getLogger(__name__);
 
-__all__ = ['ProjectStatus', 'ProjectType', 'Project','Plantype', 'TestSample']
+__all__ = ['ProjectStatus', 'ProjectType', 'Project','Plantype']
 
-class TestSample(DeclarativeBase2):
-    __tablename__ = 'tg_user'
-    
-    user_id = Column(Integer, autoincrement=True, primary_key=True)
-    user_name = Column(Unicode(16), unique=True, nullable=False)
-    email_address = Column(Unicode(255), unique=True, nullable=False)
-    display_name = Column(Unicode(255))
-    _password = Column('password', Unicode(128))
-    created = Column(DateTime, default=datetime.now)
-
-    def __repr__(self):
-        return ('<User: name=%s, email=%s, display=%s>' % (
-                self.user_name, self.email_address, self.display_name)).encode('utf-8')
-                
-    @classmethod
-    def selectAll(cls):
-        return DBSession2.query(cls).order_by(cls.created).all();
-    
+   
 class Plantype(DeclarativeBase):
     __tablename__ = 'plantype';
     plantype_id = Column(Integer, autoincrement=True, primary_key=True);

@@ -4,7 +4,7 @@ from tg import expose, flash, require, url, lurl, request, redirect, validate, s
 
 from tg.i18n import ugettext as _, lazy_ugettext as l_, set_lang,get_lang
 from tgext.pluggable import app_model
-#from comcenter.model import  User, UserRiskSection,RiskManagement,LogviewReport,RiskSection, RiskTeam, TestSample
+#from comcenter.model import  User, UserRiskSection,RiskManagement,LogviewReport,RiskSection, RiskTeam 
 #from comcenter.model import SectionListTeam, RiskLevel, RiskTeamType, RiskProgramDetail, RiskProgramGroup, RiskStatus, RiskResponsible
 
 from datetime import datetime
