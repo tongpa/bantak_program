@@ -15,6 +15,7 @@ from comcenter.controllers.util.utility import Utility
 from comcenter.controllers.util.exportexcel.risktoexcel import RiskToExcel
 
 from .adminriskmanagecontroller import AdminRiskManageController
+from risk.service.riskservice import RiskService
 import logging;
 import sys;
 log = logging.getLogger(__name__);
@@ -27,7 +28,8 @@ class RootController(TGController):
         self.util = Utility();
         self.export = RiskToExcel();
         self.defaultyear = int(datetime.now().strftime("%Y")) + int(543)#2558;
-    
+        
+        self.riskservice = RiskService()
     @expose('risk.templates.index')
     def index_old(self):
         return dict(success = True)
@@ -960,6 +962,7 @@ class RootController(TGController):
                 app_model.RiskResponsible.saveByTeam(self.crom_team, self.risk.risk_management_id);
                 app_model.RiskResponsible.saveByTeam(self.section_team, self.risk.risk_management_id);
                 
+                self.riskservice.notifyByLevel(self.risk)
          
         except Exception, exception:
             log.info("error : " + str(exception));

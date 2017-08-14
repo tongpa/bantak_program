@@ -1,0 +1,2 @@
+ALTER TABLE `risk_level`
+ADD COLUMN `alert_report`  bit(1) NULL DEFAULT 0 AFTER `risk_program_group_id`;

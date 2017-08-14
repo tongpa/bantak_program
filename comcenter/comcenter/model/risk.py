@@ -12,6 +12,7 @@ except ImportError:
 
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Unicode, Integer, DateTime, String, Text
+from sqlalchemy.dialects.mysql import BIT
 from sqlalchemy.orm import relation, synonym
 from sqlalchemy import *;
 
@@ -35,6 +36,7 @@ class RiskLevel(DeclarativeBase):
     is_clinical = Column(Integer,   nullable=False,  default=0   );
     is_physical = Column(Integer,   nullable=False,  default=0   );
     effective = Column(   Text, nullable=True);
+    alert_report = Column( BIT, default = 0);
     
     risk_program_group_id = Column(   Integer,ForeignKey('risk_program_group.risk_program_group_id'), nullable=False, index=True) ;
     risk_program_group  = relation('RiskProgramGroup', backref='risklevelprogramgroup');
@@ -44,7 +46,8 @@ class RiskLevel(DeclarativeBase):
         self.is_clinical = 0;
         self.is_physical = 0;
         self.risk_program_group_id =1;
-
+        self.alert_report = 0;
+    
     def initData(self):
         self.data = RiskLevel();
         self.data.description = 'A';
@@ -81,7 +84,10 @@ class RiskLevel(DeclarativeBase):
         self.data = RiskLevel();
         self.data.description = 'I';
         self.data.save();
-        
+    
+    def __str__(self):
+        return "<RiskLevel : risk_level_id=%s,description=%s,clinical=%s, physical=%s alert_report=%s>"  \
+            %(self.risk_level_id, self.description, self.is_clinical, self.is_physical, self.alert_report)    
     def save(self):
         DBSession.add(self); 
         DBSession.flush() ;
