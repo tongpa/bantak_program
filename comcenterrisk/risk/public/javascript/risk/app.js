@@ -69,7 +69,7 @@ Ext.application({
 					xtype : "panel",
 					border : false					
 				}
-				/*,
+				,
 				{
 					html:"<br>&nbsp;&nbsp;6.<a href='/risk/report6' target='_blank'> รายงานความทันเวลาในการจัดการ/ตอบกลับ <b>ทางกายภาพ</b> ของ  <b> หน่วยงาน </b>ที่เกี่ยวข้อง</a>",
 					xtype : "panel",
@@ -89,7 +89,7 @@ Ext.application({
 					html:"<br>&nbsp;&nbsp;9.<a href='/risk/report9' target='_blank'> รายงานความทันเวลาในการจัดการ/ตอบกลับ <b>ทางคลินิก</b> ของ  <b> ทีมคร่อม </b>ที่เกี่ยวข้อง</a>",
 					xtype : "panel",
 					border : false					
-				}*/
+				}
 				
 			]
 		});
