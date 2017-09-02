@@ -502,12 +502,8 @@ class RootController(TGController):
             
             startDate = startDate.strftime("%Y-%m-%d");
             stopDate = stopDate.strftime("%Y-%m-%d");
-        
-        
-        
             listReponsible,program =  app_model.RiskManagement.listResponsibleInTime(risk_team_type = 1, risk_program = 1, startDate = startDate, stopDate=stopDate)
-        
-         
+
         self.saveLogView();
         
         return dict(report = '', year=year, month=month, listMonth=listMonth, listYear = listYear,
